@@ -1,0 +1,64 @@
+{{ header }}
+<div id="ttr_content_and_sidebar_container" class="container account-account">
+  {% if success %}
+  <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}</div>
+  {% endif %}
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+	{% set class = 'ttr_both_sidebar' %}
+	{% elseif column_left %}
+	{% set class = 'ttr_single_sidebar' %}
+	{% elseif column_right %}
+	{% set class = 'ttr_single_sidebar_right' %}
+	{% else %}
+	{% set class = 'ttr_zero_sidebar' %}
+	 {% endif %}
+    <div id="ttr_content" class="{{ class }}"><div id="ttr_content_margin">
+    <ul class="breadcrumb">{% for breadcrumb in breadcrumbs %} <li> <a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>{% endfor %}</ul>
+    <div id="content">{{ content_top }}
+{% for i in 0..cabv-1 %}{% set flag, break = 0, false %}{% for key, value in  attribute(_context, 'content_pos_above' ~ i) if not key % 2 %}{% if value.1 == true %}{% set flag = [1] %}{% for f in flag if not break %}<div class= "contenttopcolumn{{ i }}" >{% set break = true %}{% endfor %}{% endif %}{% endfor %}{% for i,value in attribute(_context, 'content_pos_above' ~ i) if not i % 2 %} {{ value.0 }} {% endfor %}{% if break %} </div>{% endif %}<div style= "clear: both;" ></div>{% endfor %}<!--content_above_end-->
+      <h2 class="ttr_prochec_product_title">{{ text_my_account }}</h2>
+      <ul class="list-unstyled">
+        <li><a class="opc_normal_link" href="{{ edit }}">{{ text_edit }}</a></li>
+        <li><a class="opc_normal_link" href="{{ password }}">{{ text_password }}</a></li>
+        <li><a class="opc_normal_link" href="{{ address }}">{{ text_address }}</a></li>
+        <li><a class="opc_normal_link" href="{{ wishlist }}">{{ text_wishlist }}</a></li>
+      </ul>
+      {% if credit_cards %}
+      <h2 class="ttr_prochec_product_title">{{ text_credit_card }}</h2>
+      <ul class="list-unstyled">
+        {% for credit_card in credit_cards %}
+        <li><a class="opc_normal_link" href="{{ credit_card.href }}">{{ credit_card.name }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <h2 class="ttr_prochec_product_title">{{ text_my_orders }}</h2>
+      <ul class="list-unstyled">
+        <li><a class="opc_normal_link" href="{{ order }}">{{ text_order }}</a></li>
+        <li><a class="opc_normal_link" href="{{ download }}">{{ text_download }}</a></li>
+        {% if reward %}
+        <li><a class="opc_normal_link" href="{{ reward }}">{{ text_reward }}</a></li>
+        {% endif %}
+        <li><a class="opc_normal_link" href="{{ return }}">{{ text_return }}</a></li>
+        <li><a class="opc_normal_link" href="{{ transaction }}">{{ text_transaction }}</a></li>
+        <li><a class="opc_normal_link" href="{{ recurring }}">{{ text_recurring }}</a></li>
+      </ul>
+      <h2 class="ttr_prochec_product_title">{{ text_my_affiliate }}</h2>
+      <ul class="list-unstyled">
+        {% if not tracking %}
+        <li><a class="opc_normal_link" href="{{ affiliate }}">{{ text_affiliate_add }}</a></li>
+        {% else %}
+        <li><a class="opc_normal_link" href="{{ affiliate }}">{{ text_affiliate_edit }}</a></li>
+        <li><a class="opc_normal_link" href="{{ tracking }}">{{ text_tracking }}</a></li>
+        {% endif %}
+      </ul>
+      <h2 class="ttr_prochec_product_title">{{ text_my_newsletter }}</h2>
+      <ul class="list-unstyled">
+        <li><a class="opc_normal_link" href="{{ newsletter }}">{{ text_newsletter }}</a></li>
+      </ul>
+      {{ content_bottom }}</div>
+				    {% for i in 0..cblw-1 %}{% set flag, break = 0, false %}{% for key, value in  attribute(_context, 'content_pos_below' ~ i) if not key % 2 %}{% if value.1 == true %}{% set flag = [1] %}{% for f in flag if not break %}<div class= "contentbottomcolumn{{ i }}">{% set break = true %}{% endfor %}{% endif %}{% endfor %}{% for i,value in attribute(_context, 'content_pos_below' ~ i) if not i % 2 %} {{ value.0 }} {% endfor %}{% if break %} </div>{% endif %}<div style= "clear: both;"></div>{% endfor %}<!--content_below_end-->
+      </div></div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

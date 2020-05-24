@@ -1,0 +1,134 @@
+{{ header }}
+<div id="ttr_content_and_sidebar_container" class="container product-compare">
+  {% if success %}
+  <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  {% endif %}
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'ttr_both_sidebar' %}
+    {% elseif column_left %}
+    {% set class = 'ttr_single_sidebar' %}
+    {% elseif column_right %}
+    {% set class = 'ttr_single_sidebar_right' %}
+    {% else %}
+    {% set class = 'ttr_zero_sidebar' %}
+    {% endif %}
+    <div id="ttr_content" class="{{ class }}"><div id="ttr_content_margin">
+    <ul class="breadcrumb">{% for breadcrumb in breadcrumbs %} <li> <a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>{% endfor %}</ul>
+    <div id="content">{{ content_top }}
+{% for i in 0..cabv-1 %}{% set flag, break = 0, false %}{% for key, value in  attribute(_context, 'content_pos_above' ~ i) if not key % 2 %}{% if value.1 == true %}{% set flag = [1] %}{% for f in flag if not break %}<div class= "contenttopcolumn{{ i }}" >{% set break = true %}{% endfor %}{% endif %}{% endfor %}{% for i,value in attribute(_context, 'content_pos_above' ~ i) if not i % 2 %} {{ value.0 }} {% endfor %}{% if break %} </div>{% endif %}<div style= "clear: both;"></div>{% endfor %}<!--content_above_end-->
+      <h1 class="opc_cart_heading">{{ heading_title }}</h1>
+      {% if products %}
+      <div class="table-responsive">
+      <table id="cart-summary" class="table table-bordered ttr_prochec_table_background compare_table">
+        <thead class="table_head_background">
+          <tr class="ttr_prochec_Heading" >
+            <td colspan="{{ products|length + 1 }}"><strong>{{ text_product }}</strong></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table_head_background ttr_prochec_Heading">{{ text_name }}</td>
+            {% for product in products %}
+            <td><a class="ttr_prochec_product_link" href="{{ product.href }}"><strong>{{ product.name }}</strong></a></td>
+            {% endfor %} </tr>
+          <tr>
+            <td class="table_head_background ttr_prochec_Heading">{{ text_image }}</td>
+            {% for product in products %}
+            <td class="text-left ttr_prochec_image_border">{% if product.thumb %} <img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /> {% endif %}</td>
+            {% endfor %} </tr>
+          <tr>
+            <td class="table_head_background ttr_prochec_Heading">{{ text_price }}</td>
+            {% for product in products %}
+            <td class="ttr_prochec_price">{% if product.price %}
+              {% if not product.special %}
+              {{ product.price }}
+              {% else %} <strike>{{ product.price }}</strike> {{ product.special }}
+              {% endif %}
+              {% endif %}</td>
+            {% endfor %} </tr>
+          <tr>
+            <td class="table_head_background ttr_prochec_Heading">{{ text_model }}</td>
+            {% for product in products %}
+            <td>{{ product.model }}</td>
+            {% endfor %} </tr>
+          <tr>
+            <td class="table_head_background ttr_prochec_Heading">{{ text_manufacturer }}</td>
+            {% for product in products %}
+            <td>{{ product.manufacturer }}</td>
+            {% endfor %} </tr>
+          <tr>
+            <td class="table_head_background ttr_prochec_Heading">{{ text_availability }}</td>
+            {% for product in products %}
+            <td>{{ product.availability }}</td>
+            {% endfor %} </tr>
+        {% if review_status %}
+        <tr>
+          <td class="table_head_background ttr_prochec_Heading">{{ text_rating }}</td>
+          {% for product in products %}
+          <td class="rating"> {% for i in 1..5 %}
+            {% if product.rating < i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> {% endif %}
+            {% endfor %} <br />
+            {{ product.reviews }}</td>
+          {% endfor %} </tr>
+        {% endif %}
+        <tr>
+          <td class="table_head_background ttr_prochec_Heading">{{ text_summary }}</td>
+          {% for product in products %}
+          <td class="description">{{ product.description }}</td>
+          {% endfor %} </tr>
+        <tr>
+          <td class="table_head_background ttr_prochec_Heading">{{ text_weight }}</td>
+          {% for product in products %}
+          <td>{{ product.weight }}</td>
+          {% endfor %} </tr>
+        <tr>
+          <td class="table_head_background ttr_prochec_Heading">{{ text_dimension }}</td>
+          {% for product in products %}
+          <td>{{ product.length }} x {{ product.width }} x {{ product.height }}</td>
+          {% endfor %} </tr>
+          </tbody>
+        
+        {% for attribute_group in attribute_groups %}
+        <thead class="table_head_background opencart_compare">
+          <tr class="ttr_prochec_Heading">
+            <td colspan="{{ products|length + 1 }}"><strong>{{ attribute_group.name }}</strong></td>
+          </tr>
+        </thead>
+        {% for key, attribute in attribute_group.attribute %}
+        <tbody>
+          <tr>
+            <td class="table_head_background ttr_prochec_Heading">{{ attribute.name }}</td>
+            {% for product in products %}
+            {% if product.attribute[key] %}
+            <td> {{ product.attribute[key] }}</td>
+            {% else %}
+            <td></td>
+            {% endif %}
+            {% endfor %}
+          </tr>
+        </tbody>
+        {% endfor %}
+        {% endfor %}
+        <tr>
+          <td></td>
+          {% for product in products %}
+          <td><input type="button" value="{{ button_cart }}" class="btn btn-primary btn-block" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');" />
+            <a href="{{ product.remove }}" class="btn btn-danger btn-block">{{ button_remove }}</a></td>
+          {% endfor %} </tr>
+      </table>
+		</div>
+      {% else %}
+      <p>{{ text_empty }}</p>
+      <div class="buttons">
+        <div class="pull-right"><a href="{{ continue }}" class="btn btn-default">{{ button_continue }}</a></div>
+      </div>
+      {% endif %}
+      {{ content_bottom }}</div>
+				    {% for i in 0..cblw-1 %}{% set flag, break = 0, false %}{% for key, value in  attribute(_context, 'content_pos_below' ~ i) if not key % 2 %}{% if value.1 == true %}{% set flag = [1] %}{% for f in flag if not break %}<div class= "contentbottomcolumn{{ i }}">{% set break = true %}{% endfor %}{% endif %}{% endfor %}{% for i,value in attribute(_context, 'content_pos_below' ~ i) if not i % 2 %} {{ value.0 }} {% endfor %}{% if break %} </div>{% endif %}<div style= "clear: both;"></div>{% endfor %}<!--content_below_end-->
+      </div></div>
+    {{ column_right }}</div>
+</div>
+{{ footer }} 

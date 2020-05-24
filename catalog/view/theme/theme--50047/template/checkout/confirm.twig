@@ -1,0 +1,55 @@
+{% if not redirect %}
+<div class="table-responsive">
+  <table  id="cart_summary" class="table table-bordered table-hover ttr_prochec_table_background opencart_review_table opencart_review_product">
+    <thead class="table_head_background">
+      <tr>
+        <td class="text-left"><span class="ttr_prochec_Heading">{{ column_name }}</td></span>
+        <td class="text-left"><span class="ttr_prochec_Heading">{{ column_model }}</td></span>
+        <td class="text-right"><span class="ttr_prochec_Heading">{{ column_quantity }}</td></span>
+        <td class="text-right"><span class="ttr_prochec_Heading">{{ column_price }}</td></span>
+        <td class="text-right"><span class="ttr_prochec_Heading">{{ column_total }}</td></span>
+      </tr>
+    </thead>
+    <tbody>
+    
+    {% for product in products %}
+    <tr class="ttr_prochec_row_1 row-1">
+      <td class="text-left" data-title="{{ column_name }}"><a href="{{ product.href }}" class="ttr_prochec_product_link">{{ product.name }}</a> {% for option in product.option %} <br />
+        &nbsp;<small class="opc_cart_desc"> - {{ option.name }}: {{ option.value }}</small> {% endfor %}
+        {% if product.recurring %} <br />
+        <span class="label label-info">{{ text_recurring_item }}</span> <small class="opc_cart_desc">{{ product.recurring }}</small> {% endif %}</td>
+      <td class="text-left" data-title="{{ column_model }}"><span class="opc_cart_desc">{{ product.model }}</span></td>
+      <td class="text-right" data-title="{{ column_quantity }}"><span class="opc_cart_desc">{{ product.quantity }}</span></td>
+      <td class="text-right" data-title="{{ column_price }}"><span class="opc_cart_desc ttr_prochec_price">{{ product.price }}</span></td>
+      <td class="text-right" data-title="{{ column_total }}"><span class="opc_cart_desc ttr_prochec_price">{{ product.total }}</span></td>
+    </tr>
+    {% endfor %}
+    {% for voucher in vouchers %}
+    <tr>
+      <td class="text-left" data-title="{{ column_name }}"><span class="opc_cart_desc cart_product_name">{{ voucher.description }}</span></td>
+      <td class="text-left" data-title="{{ column_model }}"><span class="ttr_prochec_Heading"></span></td>
+      <td class="text-right" data-title="{{ column_quantity }}"><span class="opc_cart_desc">1</span></td>
+      <td class="text-right" data-title="{{ column_price }}"><span class="ttr_prochec_price">{{ voucher.amount }}</span></td>
+      <td class="text-right" data-title="{{ column_total }}"><span class="ttr_prochec_price">{{ voucher.amount }}</span></td>
+    </tr>
+    {% endfor %}
+      </tbody>
+    
+    <tfoot>
+    
+    {% for total in totals %}
+    <tr class="ttr_opc_table">
+      <td colspan="4" class="ttr_prochec_subtotal text-right"><strong>{{ total.title }}:</strong></td>
+      <td class="ttr_prochec_subtotal text-right">{{ total.text }}</td>
+    </tr>
+    {% endfor %}
+      </tfoot>
+    
+  </table>
+</div>
+{{ payment }}
+{% else %} 
+<script type="text/javascript"><!--
+location = '{{ redirect }}';
+//--></script> 
+{% endif %}

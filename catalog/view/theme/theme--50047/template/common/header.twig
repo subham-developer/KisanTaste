@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html dir="{{ direction }}" lang="{{ lang }}">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title>{{ title }}</title>
+<base href="{{ base }}"/>
+{% if description %}
+<meta name="description" content="{{ description }}"/>
+{% endif %}
+{% if keywords %}
+<meta name="keywords" content="{{ keywords }}"/>
+{% endif %}
+<script type="text/javascript" src="catalog/view/theme/theme--50047/javascript/jquery/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="catalog/view/theme/theme--50047/javascript/jquery-ui-1.10.4.custom.min.js"></script>
+<link href="catalog/view/theme/theme--50047/stylesheet/bootstrap.css" rel="stylesheet" media="screen"/>
+<link href="catalog/view/theme/theme--50047/stylesheet/style_opencart.css" rel="stylesheet" media="screen"/>
+<script type="text/javascript" src="catalog/view/theme/theme--50047/javascript/bootstrap/js/bootstrap.min.js"></script>
+<link href="catalog/view/theme/theme--50047/stylesheet/styles.css" rel="stylesheet"/>
+<script type="text/javascript" src="catalog/view/theme/theme--50047/javascript/customjs.js"></script>
+<script type="text/javascript" src="catalog/view/theme/theme--50047/javascript/html5shiv.js"></script>
+<script type="text/javascript" src="catalog/view/theme/theme--50047/javascript/tt_slideshow.js"></script>
+<script type="text/javascript" src="catalog/view/theme/theme--50047/javascript/totop.js"></script>
+<script type="text/javascript" src="catalog/view/theme/theme--50047/javascript/tt_animation.js"></script>
+{% for style in styles %}
+<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
+{% endfor %}
+{% for script in scripts %}
+<script src="{{ script }}" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="catalog/view/javascript/font-awesome/css/font-awesome.min.css"/>
+{% endfor %}
+<script type="text/javascript" src="catalog/view/theme/theme--50047/javascript/common.js"></script>
+{% for link in links %}
+<link href="{{ link.href }}" rel="{{ link.rel }}" />
+{% endfor %}
+{% for analytic in analytics %}
+{{ analytic }}
+{% endfor %}
+</head>
+{% if route is empty %}
+{% set class = class ~ 'ttr_ecommerce' %}
+{% endif %}
+{% if route is not empty and route == 'product/product' %}
+{% set class = class ~ 'ttr_ecommerce productdescription' %}
+{% else %}
+{% if route == 'checkout/cart' or route == 'checkout/checkout' or route == 'checkout/success' %}
+{% set class = 'ttr_ecommerce productcheckout' %}
+{% endif %}
+{% endif %}
+<body class="{{ class }}">
+<div class="totopshow">
+<a class="back-to-top" href="#" style="display: inline;"><img src="catalog/view/theme/theme--50047/image/gototop.png" alt="Back to Top"></img></a>
+</div>
+<!--header_above-->
+{% for i in 0..abv-1 %}
+<div class="ttr_banner_header">
+<div class="ttr_banner_header_inner_above_widget_container">
+{% set flag, break = 0, false %}
+{% for key, value in  attribute(_context, 'header_pos_above' ~ i) if not key % 2 %}
+{% if value.1 == true %}
+{% set flag = [1] %}
+{% for f in flag if not break %}
+<div class="ttr_banner_header_inner_above{{ i }}">
+{% set break = true %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% for key, value in attribute(_context, 'header_pos_above' ~ i) if not key % 2 %}
+{{ value.0 }} 
+ {% endfor %}
+{% if break %}
+</div>
+{% endif %}
+</div>
+</div>
+<div style="clear: both;"></div>
+{% endfor %}
+<!--header_above_end-->
+<header id="ttr_header">
+<div style="height:0px;width:0px;overflow:hidden;-webkit-margin-top-collapse: separate;"></div>
+<div id="ttr_header_inner">
+<div class="ttr_header_element_alignment container">
+<div class="ttr_header_links nav " id="top-links">
+<ul class="list-inline links">
+<li class="first">
+<a class="ttr_phone_link" href="{{ contact }}"><span class="hidden-xs hidden-sm">{{ telephone }}</span></a></li>
+ <li class="dropdown">
+<a class="ttr_userlink_link" href="{{ account }}" title="{{ text_account }}" class="dropdown-toggle" data-toggle="dropdown"><span class="hidden-xs hidden-sm">{{ text_account }}</span><span class="caret dropdown-toggle"></span></a>
+<ul class="dropdown-menu dropdown-menu-right">
+{% if logged %}
+<li><a href="{{ account }}">{{ text_account }}</a></li>
+<li><a href="{{ order }}">{{ text_order }}</a></li>
+<li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+<li><a href="{{ download }}">{{ text_download }}</a></li>
+<li><a href="{{ logout }}">{{ text_logout }}</a></li>
+{% else %}
+<li><a href="{{ register }}">{{ text_register }}</a></li>
+<li><a href="{{ login }}">{{ text_login }}</a></li>
+{% endif %}
+</ul>
+</li>
+<li><a class="ttr_wishlist_link" href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}"><span class="hidden-xs hidden-sm hidden-md">{{ text_wishlist }}</span></a></li>
+<li><a class="ttr_cartlink_link" href="{{ shopping_cart }}" title="{{ text_shopping_cart }}"><span class="hidden-xs hidden-sm hidden-md">{{ text_shopping_cart }}</span></a></li>
+<li class="last">
+<a class="ttr_checkoutlink_link" href="{{ checkout }}" title="{{ text_checkout }}"><span class="hidden-xs hidden-sm hidden-md">{{ text_checkout }}</span></a></li>
+</ul>
+</div>
+<div class="ttr_header_cart ">
+{{ cart }}</div>
+<div class="form-search input-group">
+{{ search }}
+ </div>
+<div class="ttr_images_container">
+<div class="ttr_header_logo">
+{% if logo %}
+<img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="" />
+{% else %}
+<h1><a href="{{ home }}">{{ name }}</a></h1>
+{% endif %}
+</div>
+</div>
+</div>
+<nav id="top">
+<div class="ttr_currency_container ">
+{{ currency }}
+{{ language }}
+</div>
+</nav>
+<div class="ttr_images_container">
+</div>
+{% for key, value in header_pos if not key % 2 %}
+{{ value.0 }} 
+ {% endfor %}
+</div>
+</header>
+<!--header_below-->
+{% for i in 0..blw-1 %}
+<div class="ttr_banner_header">
+<div class="ttr_banner_header_inner_below_widget_container">
+{% set flag, break = 0, false %}
+{% for key, value in  attribute(_context, 'header_pos_below' ~ i) if not key % 2 %}
+{% if value.1 == true %}
+{% set flag = [1] %}
+{% for f in flag if not break %}
+<div class="ttr_banner_header_inner_below{{ i }}">
+{% set break = true %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% for key, value in attribute(_context, 'header_pos_below' ~ i) if not key % 2 %}
+{{ value.0 }} 
+ {% endfor %}
+{% if break %}
+</div>
+{% endif %}
+</div>
+</div>
+<div style="clear: both;"></div>
+{% endfor %}
+<!--header_below_end-->
+<!--menu_above-->
+{% for i in 0..mabv-1 %}
+<div class="ttr_banner_menu">
+<div class="ttr_banner_menu_inner_above_widget_container">
+{% set flag, break = 0, false %}
+{% for key, value in  attribute(_context, 'menu_pos_above' ~ i) if not key % 2 %}
+{% if value.1 == true %}
+{% set flag = [1] %}
+{% for f in flag if not break %}
+<div class="ttr_banner_menu_inner_above{{ i }}">
+{% set break = true %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% for key, value in attribute(_context, 'menu_pos_above' ~ i) if not key % 2 %}
+{{ value.0 }} 
+ {% endfor %}
+{% if break %}
+</div>
+{% endif %}
+</div>
+</div>
+<div style="clear: both;"></div>
+{% endfor %}
+<!--menu_above_end-->
+<div id="ttr_menu"> 
+<div style="height:0px;width:0px;overflow:hidden;-webkit-margin-top-collapse: separate;"></div>
+<nav class="navbar-default navbar">
+   <div id="ttr_menu_inner_in">
+<div class="ttr_menu_element_alignment container">
+</div>
+<div class="ttr_images_container">
+</div>
+<?php if ($categories) { ?>
+<div id="navigationmenu">
+<div class="navbar-header">
+<button id="nav-expander" data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+<span class="ttr_menu_toggle_button">
+<span class="sr-only">
+</span>
+<span class="icon-bar">
+</span>
+<span class="icon-bar">
+</span>
+<span class="icon-bar">
+</span>
+</span>
+<span class="ttr_menu_button_text">
+Menu
+</span>
+</button>
+</div>
+<div class="menu-center collapse navbar-collapse">
+{{ menu }}
+</div>
+</div>
+<?php } ?>
+{% for key, value in menu_pos if not key % 2 %}
+{{ value.0 }}
+{% endfor %}
+</div>
+</nav>
+</div>
+<!--menu_below-->
+{% for i in 0..mblw-1 %}
+<div class="ttr_banner_menu">
+<?php echo ${'menu_pos_below'.$j}[$i][0];
+ } if ($flag == 1){ ?>
+<div class="ttr_banner_menu_inner_below_widget_container">
+{% set flag, break = 0, false %}
+{% for key, value in  attribute(_context, 'menu_pos_below' ~ i) if not key % 2 %}
+{% if value.1 == true %}
+{% set flag = [1] %}
+{% for f in flag if not break %}
+<div class="ttr_banner_menu_inner_below{{ i }}">
+{% set break = true %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% for key, value in attribute(_context, 'menu_pos_below' ~ i) if not key % 2 %}
+{{ value.0 }} 
+ {% endfor %}
+{% if break %}
+</div>
+{% endif %}
+</div>
+</div>
+<div style="clear: both;"></div>
+{% endfor %}
+<!--menu_below_end-->
+<div style="height:0px;width:0px;overflow:hidden;-webkit-margin-top-collapse: separate;"></div>
+<div id="ttr_page" class="container">

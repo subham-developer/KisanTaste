@@ -1,0 +1,21 @@
+{{ header }}
+<div class="container" id="ttr_content_and_sidebar_container">
+{% if column_left and column_right %}
+{% set class = 'ttr_both_sidebar' %}
+{% elseif column_left %}
+{% set class = 'ttr_single_sidebar' %}
+{% elseif column_right %}
+{% set class = 'ttr_single_sidebar_right' %}
+{% else %}
+{% set class = 'ttr_zero_sidebar' %}
+{% endif %}
+ <div id="ttr_content" class="row {{ class }}">
+<div id="ttr_content_margin">{{ content_top }}
+{% for i in 0..cabv-1 %}{% set flag, break = 0, false %}{% for key, value in  attribute(_context, 'content_pos_above' ~ i) if not key % 2 %}{% if value.1 == true %}{% set flag = [1] %}{% for f in flag if not break %}<div class="contenttopcolumn{{ i }}">{% set break = true %}{% endfor %}{% endif %}{% endfor %}{% for i,value in attribute(_context, 'content_pos_above' ~ i) if not i % 2 %} {{ value.0 }} {% endfor %}{% if break %} </div>{% endif %}{% endfor %}<div style="clear: both;"></div><!--content_above_end-->
+{{ content_bottom }}{% for i in 0..cblw-1 %}{% set flag, break = 0, false %}{% for key, value in  attribute(_context, 'content_pos_below' ~ i) if not key % 2 %}{% if value.1 == true %}{% set flag = [1] %}{% for f in flag if not break %}<div class="contentbottomcolumn{{ i }}">{% set break = true %}{% endfor %}{% endif %}{% endfor %}{% for i,value in attribute(_context, 'content_pos_below' ~ i) if not i % 2 %} {{ value.0 }} {% endfor %}{% if break %} </div>{% endif %}{% endfor %}<div style="clear: both;"></div><!--content_below_end-->
+<div id="content" >
+</div>
+</div>
+</div>
+</div>
+{{ footer }}

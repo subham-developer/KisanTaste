@@ -1,0 +1,108 @@
+</div>
+<!--footer_above-->
+{% for i in 0..fabv-1 %}
+<div class="footer-widget-area" >
+<div class="ttr_footer-widget-area_inner_above_widget_container">
+{% set flag, break = 0, false %}
+{% for key, value in  attribute(_context, 'footer_pos_above' ~ i) if not key % 2 %}
+{% if value.1 == true %}
+{% set flag = [1] %}
+{% for f in flag if not break %}
+<div class="ttr_footer-widget-area_inner_above{{ i }}">
+{% set break = true %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% for key, value in attribute(_context, 'footer_pos_above' ~ i) if not key % 2 %}
+{{ value.0 }} 
+ {% endfor %}
+{% if break %}
+</div>
+{% endif %}
+</div>
+</div>
+<div style="clear: both;"></div>
+{% endfor %}
+<footer id="ttr_footer" >
+<div id="ttr_footer_inner">
+<div>
+{% if informations %}
+ <div class="col-md-3">
+<h5>{{ text_information }}</h5>
+<ul class="links">
+{% for information in informations %}
+<li><a href="{{ information.href }}">{{ information.title }}</a></li>
+{% endfor %}
+</ul></div> {% endif %}
+ <div class="col-md-3">
+<h5>{{ text_service }}</h5>
+<ul class="links">
+<li><a href="{{ contact }}">{{ text_contact }}</a></li>
+<li><a href="{{ return }}">{{ text_return }}</a></li>
+<li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
+</ul>
+</div>
+ <div class="col-md-3">
+<h5>{{ text_extra }}</h5>
+<ul class="links">
+<li><a href="{{ manufacturer }}"><?php echo $text_manufacturer; ?></a></li>
+<li><a href="{{ voucher }}">{{ text_voucher }}</a></li>
+<li><a href="{{ affiliate }}">{{ text_affiliate }}</a></li>
+<li><a href="{{ special }}">{{ text_special }}</a></li>
+</ul>
+</div>
+ <div class="col-md-3">
+<h5>{{ text_account }}</h5>
+<ul class="links">
+<li><a href="{{ account }}">{{ text_account }}</a></li>
+<li><a href="{{ order }}">{{ text_order }}</a></li>
+<li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
+<li><a href="{{ newsletter }}">{{ text_newsletter }}</a></li>
+</ul>
+</div>
+ <div class=" visible-sm-block visible-md-block visible-lg-block visible-xs-block d-xl-block d-lg-block d-sm-block d-md-block d-block " style="clear:both;"></div>
+</div>
+ <div class="ttr_footer_bottom_footer">
+ <div class="ttr_footer_bottom_footer_inner">
+<div class="ttr_footer_element_alignment container">
+</div>
+{% for key, value in footer_pos if not key % 2 %}
+{{ value.0 }} 
+ {% endfor %}
+<div id="ttr_footer_designed_by_links">
+<a href="http://templatetoaster.com" target="_self" >
+OpenCart Theme
+</a>
+<span id="ttr_footer_designed_by">
+Designed With TemplateToaster
+</span>
+</div>
+</div>
+</div>
+</div>
+<div style="height:0px;width:0px;overflow:hidden;-webkit-margin-top-collapse: separate;"></div>
+</footer>
+<!--footer_below-->
+{% for i in 0..fblw-1 %}
+<div class="footer-widget-area" >
+<div class="ttr_footer-widget-area_inner_below_widget_container">
+{% set flag, break = 0, false %}
+{% for key, value in  attribute(_context, 'footer_pos_below' ~ i) if not key % 2 %}
+{% if value.1 == true %}
+{% set flag = [1] %}
+{% for f in flag if not break %}
+<div class="ttr_footer-widget-area_inner_below{{ i }}">
+{% set break = true %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% for key, value in attribute(_context, 'footer_pos_below' ~ i) if not key % 2 %}
+{{ value.0 }} 
+ {% endfor %}
+{% if break %}
+</div>
+{% endif %}
+</div></div>
+<div style="clear: both;"></div>
+{% endfor %}
+</div>

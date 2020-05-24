@@ -1,0 +1,17 @@
+{% if modules %}
+<aside id="ttr_sidebar_right">
+<div id="ttr_sidebar_right_margin">
+<div style="height:0px;width:0px;overflow:hidden;-webkit-margin-top-collapse: separate;"></div>
+<div class="ttr_sidebar_right_padding">
+{% for module in modules %}
+<div class="ttr_block">
+<div class="ttr_block_content">
+{{ module }}
+</div>
+</div>
+{% endfor %}
+<div style="height:0px;width:0px;overflow:hidden;-webkit-margin-top-collapse: separate;"></div>
+</div>
+</div>
+</aside>
+{% endif %}

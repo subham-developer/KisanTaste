@@ -1,0 +1,20 @@
+{% if class %}
+<div class="{{ class }}">
+{% endif %} 
+{% if modules %}
+{% if name %}
+<div class="{{ name }}">
+{% endif %}
+{% for module in modules %}
+{{ module }}
+{% endfor %}
+{% if name %}
+</div><!--name div closed-->
+{% endif %}
+{% endif %}
+{% if class %}
+</div><!--class div closed-->
+{% endif %}
+{% if div_clearfix %}
+<div class="{{ div_clearfix }}"></div><!--clearfix div closed-->
+{% endif %}

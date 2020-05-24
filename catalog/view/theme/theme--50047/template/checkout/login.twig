@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-md-6 ttr_opc_personal_deatils">
+    <h2 class="ttr_prochec_product_title">{{ text_new_customer }}</h2>
+    <div class="form-group"><p class="ttr_prodsignincontent">{{ text_checkout }}</p>
+    <div class="radio">
+      <label class="ttr_prodsignincontent"> {% if account == 'register' %}
+        <input type="radio" name="account" value="register" checked="checked" />
+        {% else %}
+        <input type="radio" name="account" value="register" />
+        {% endif %}
+        {{ text_register }}</label>
+    </div>
+    {% if checkout_guest %}
+    <div class="radio">
+      <label class="ttr_prodsignincontent"> {% if account == 'guest' %}
+        <input type="radio" name="account" value="guest" checked="checked" />
+        {% else %}
+        <input type="radio" name="account" value="guest" />
+        {% endif %}
+        {{ text_guest }}</label>
+    </div>
+    {% endif %}
+    <p class="ttr_prodsignincontent">{{ text_register_account }}</p></div>
+    <input type="button" value="{{ button_continue }}" id="button-account" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+  </div>
+  <div class="col-md-6 ttr_opc_address">
+    <h2 class="ttr_prochec_product_title">{{ text_returning_customer }}</h2>
+    <p class="ttr_prodsignincontent">{{ text_i_am_returning_customer }}</p>
+    <div class="form-group">
+      <label class="ttr_prodsignincontent" for="input-email">{{ entry_email }}</label>
+      <input type="text" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label class="ttr_prodsignincontent" for="input-password">{{ entry_password }}</label>
+      <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
+      <a href="{{ forgotten }}" class="opc_normal_link">{{ text_forgotten }}</a></div>
+    <input type="button" value="{{ button_login }}" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+  </div>
+</div>
